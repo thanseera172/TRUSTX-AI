@@ -1,0 +1,165 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile document",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "theme": { "type": "string", "enum": ["dark", "light"] }
+      },
+      "required": ["uid", "email"]
+    },
+    "Verification": {
+      "title": "Verification",
+      "description": "Complete AI Trust Verification analysis record",
+      "type": "object",
+      "properties": {
+        "verificationId": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string", "maxLength": 200 },
+        "inputType": { "type": "string", "enum": ["text", "code", "combined"] },
+        "sourceAI": { "type": "string", "enum": ["ChatGPT", "Gemini", "Claude", "Other"] },
+        "submittedText": { "type": "string" },
+        "submittedCode": { "type": "string" },
+        "language": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "processingStatus": { "type": "string", "enum": ["pending", "processing", "completed", "failed"] },
+        "assessment": { "type": "object" },
+        "claimCount": { "type": "number" },
+        "supportedCount": { "type": "number" },
+        "refutedCount": { "type": "number" },
+        "insufficientCount": { "type": "number" },
+        "citationCount": { "type": "number" },
+        "securityFindingCount": { "type": "number" }
+      },
+      "required": ["verificationId", "userId", "title", "inputType"]
+    },
+    "Claim": {
+      "title": "Claim",
+      "description": "Individual extracted claim from AI output",
+      "type": "object",
+      "properties": {
+        "claimId": { "type": "string" },
+        "verificationId": { "type": "string" },
+        "userId": { "type": "string" },
+        "originalText": { "type": "string" },
+        "normalisedClaim": { "type": "string" },
+        "claimType": { "type": "string" },
+        "verificationStatus": { "type": "string", "enum": ["SUPPORTED", "REFUTED", "INSUFFICIENT_EVIDENCE", "UNVERIFIED"] },
+        "confidence": { "type": "number" },
+        "explanation": { "type": "string" },
+        "sourcesCount": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["claimId", "verificationId", "userId", "normalisedClaim"]
+    },
+    "Evidence": {
+      "title": "Evidence",
+      "description": "Retrieved external evidence source for a claim",
+      "type": "object",
+      "properties": {
+        "evidenceId": { "type": "string" },
+        "claimId": { "type": "string" },
+        "verificationId": { "type": "string" },
+        "userId": { "type": "string" },
+        "sourceTitle": { "type": "string" },
+        "sourceUrl": { "type": "string" },
+        "sourceSnippet": { "type": "string" },
+        "relevance": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["evidenceId", "claimId", "verificationId", "userId", "sourceTitle"]
+    },
+    "Contradiction": {
+      "title": "Contradiction",
+      "description": "Contradiction detected between claims",
+      "type": "object",
+      "properties": {
+        "contradictionId": { "type": "string" },
+        "verificationId": { "type": "string" },
+        "userId": { "type": "string" },
+        "claimIds": { "type": "array" },
+        "explanation": { "type": "string" },
+        "severity": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["contradictionId", "verificationId", "userId", "explanation"]
+    },
+    "Citation": {
+      "title": "Citation",
+      "description": "Academic citation verified against Crossref / OpenAlex",
+      "type": "object",
+      "properties": {
+        "citationId": { "type": "string" },
+        "verificationId": { "type": "string" },
+        "userId": { "type": "string" },
+        "submittedCitation": { "type": "string" },
+        "retrievedTitle": { "type": "string" },
+        "retrievedAuthors": { "type": "string" },
+        "retrievedYear": { "type": "string" },
+        "retrievedDoi": { "type": "string" },
+        "retrievedUrl": { "type": "string" },
+        "status": { "type": "string", "enum": ["VERIFIED", "METADATA_MISMATCH", "NOT_FOUND", "UNVERIFIED"] },
+        "mismatchDetails": { "type": "string" },
+        "databaseSource": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["citationId", "verificationId", "userId", "submittedCitation", "status"]
+    },
+    "SecurityFinding": {
+      "title": "SecurityFinding",
+      "description": "Static security analysis finding for submitted code",
+      "type": "object",
+      "properties": {
+        "findingId": { "type": "string" },
+        "verificationId": { "type": "string" },
+        "userId": { "type": "string" },
+        "ruleId": { "type": "string" },
+        "name": { "type": "string" },
+        "severity": { "type": "string", "enum": ["Critical", "High", "Medium", "Low", "Informational"] },
+        "lineNumber": { "type": "number" },
+        "snippet": { "type": "string" },
+        "explanation": { "type": "string" },
+        "remediation": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["findingId", "verificationId", "userId", "ruleId", "severity", "lineNumber"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/verifications/{verificationId}": {
+      "schema": "Verification",
+      "description": "Verification reports and metadata"
+    },
+    "/claims/{claimId}": {
+      "schema": "Claim",
+      "description": "Extracted factual claims"
+    },
+    "/evidence/{evidenceId}": {
+      "schema": "Evidence",
+      "description": "External evidence items"
+    },
+    "/contradictions/{contradictionId}": {
+      "schema": "Contradiction",
+      "description": "Contradictions between claims"
+    },
+    "/citations/{citationId}": {
+      "schema": "Citation",
+      "description": "Academic citation checks"
+    },
+    "/securityFindings/{findingId}": {
+      "schema": "SecurityFinding",
+      "description": "Code vulnerability findings"
+    }
+  }
+}

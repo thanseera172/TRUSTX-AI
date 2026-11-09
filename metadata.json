@@ -1,0 +1,6 @@
+{
+  "name": "TRUSTX AI — Universal AI Trust Verification System",
+  "description": "An intelligent verification layer that analyses AI-generated content, validates claims against evidence, detects contradictions, verifies academic citations, and identifies code security risks.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

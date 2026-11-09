@@ -1,0 +1,766 @@
+import { VerificationRecord } from '../src/types/index.ts';
+
+export interface DemoCasePreset {
+  id: string;
+  name: string;
+  tagline: string;
+  category: string;
+  inputType: 'text' | 'code' | 'combined';
+  sourceAI: 'ChatGPT' | 'Gemini' | 'Claude';
+  textInput?: string;
+  codeInput?: string;
+  language?: string;
+  fullRecord: VerificationRecord;
+}
+
+export const DEMO_CASES: DemoCasePreset[] = [
+  // CASE 1: Factual answer with supported statements
+  {
+    id: 'demo-case-1',
+    name: 'Case 1: Fully Corroborated Astronomical Overview',
+    tagline: 'James Webb Space Telescope Deployment & Orbit',
+    category: 'Scientific / Historical',
+    inputType: 'text',
+    sourceAI: 'ChatGPT',
+    textInput: `The James Webb Space Telescope (JWST) was launched on December 25, 2021, aboard an Ariane 5 rocket from Kourou, French Guiana. It operates at the Second Lagrange Point (L2), approximately 1.5 million kilometers (930,000 miles) from Earth. Its primary mirror consists of 18 hexagonal beryllium segments coated with ultra-thin gold, spanning 6.5 meters in diameter. JWST is designed primarily for infrared astronomy, enabling observations of the universe's first galaxies.`,
+    fullRecord: {
+      verificationId: 'DEMO-JWST-001',
+      userId: 'demo_user',
+      title: 'JWST Orbital Architecture & Specifications',
+      inputType: 'text',
+      sourceAI: 'ChatGPT',
+      submittedText: `The James Webb Space Telescope (JWST) was launched on December 25, 2021, aboard an Ariane 5 rocket from Kourou, French Guiana. It operates at the Second Lagrange Point (L2), approximately 1.5 million kilometers (930,000 miles) from Earth. Its primary mirror consists of 18 hexagonal beryllium segments coated with ultra-thin gold, spanning 6.5 meters in diameter. JWST is designed primarily for infrared astronomy, enabling observations of the universe's first galaxies.`,
+      createdAt: '2026-11-08T14:30:00Z',
+      processingStatus: 'completed',
+      isDemo: true,
+      assessment: {
+        overallLabel: 'Evidence-aligned',
+        summaryExplanation: '100% of the 4 extracted factual claims are verified by authoritative NASA and ESA telemetry records and scientific publications.',
+        factualityScore: 1.0,
+        factualityDisplay: '100% (4/4 verified claims)',
+        evidenceCoverageScore: 1.0,
+        evidenceCoverageDisplay: '100% (4/4 verifiable claims)',
+        contradictionScore: 0,
+        contradictionDisplay: '0 detected (Internally consistent)',
+        citationReliabilityScore: null,
+        citationReliabilityDisplay: 'Not applicable',
+        codeSecurityScore: null,
+        codeSecurityDisplay: 'Not applicable',
+        totalVerifiableClaims: 4,
+        supportedClaimsCount: 4,
+        refutedClaimsCount: 0,
+        insufficientClaimsCount: 0,
+        contradictionsCount: 0,
+        hallucinationsCount: 0,
+        verifiedCitationsCount: 0,
+        mismatchedCitationsCount: 0,
+        notFoundCitationsCount: 0,
+        criticalSecurityCount: 0,
+        highSecurityCount: 0,
+        mediumSecurityCount: 0,
+        lowSecurityCount: 0,
+      },
+      claims: [
+        {
+          claimId: 'C001',
+          originalText: 'The James Webb Space Telescope (JWST) was launched on December 25, 2021, aboard an Ariane 5 rocket from Kourou, French Guiana.',
+          normalisedClaim: 'JWST was launched on December 25, 2021 aboard an Ariane 5 rocket from Kourou, French Guiana.',
+          claimType: 'historical',
+          verifiable: true,
+          verificationStatus: 'SUPPORTED',
+          confidence: 0.99,
+          explanation: 'Confirmed by NASA launch press archives and ESA Ariane flight VA256 records.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C001-1',
+              claimId: 'C001',
+              sourceTitle: 'NASA: Target Webb Launch Date Milestone',
+              sourceUrl: 'https://www.nasa.gov/press-release/target-webb-launch-date',
+              sourceSnippet: 'The James Webb Space Telescope successfully launched on an Ariane 5 rocket from Europe’s Spaceport in French Guiana on Dec. 25, 2021.',
+              relevance: 'Confirms exact date, launch vehicle, and spaceport coordinates.',
+            },
+          ],
+        },
+        {
+          claimId: 'C002',
+          originalText: 'It operates at the Second Lagrange Point (L2), approximately 1.5 million kilometers (930,000 miles) from Earth.',
+          normalisedClaim: 'JWST orbits the Sun-Earth L2 Lagrange point roughly 1.5 million km from Earth.',
+          claimType: 'scientific',
+          verifiable: true,
+          verificationStatus: 'SUPPORTED',
+          confidence: 0.98,
+          explanation: 'Supported by ESA and Space Telescope Science Institute (STScI) orbital parameters.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C002-1',
+              claimId: 'C002',
+              sourceTitle: 'ESA Science & Technology: JWST Orbit at L2',
+              sourceUrl: 'https://sci.esa.int/web/jwst/-/orbit-at-l2',
+              sourceSnippet: 'Webb is positioned around the second Lagrange point (L2), located approximately 1.5 million km directly behind the Earth as viewed from the Sun.',
+              relevance: 'Directly validates halo orbital radius and position relative to Earth.',
+            },
+          ],
+        },
+        {
+          claimId: 'C003',
+          originalText: 'Its primary mirror consists of 18 hexagonal beryllium segments coated with ultra-thin gold, spanning 6.5 meters in diameter.',
+          normalisedClaim: 'The primary mirror comprises 18 gold-coated beryllium hexagonal segments measuring 6.5 meters across.',
+          claimType: 'technical',
+          verifiable: true,
+          verificationStatus: 'SUPPORTED',
+          confidence: 0.97,
+          explanation: 'Directly corroborates STScI optical engineering blueprints and mirror segment specifications.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C003-1',
+              claimId: 'C003',
+              sourceTitle: 'NASA Goddard: Webb Mirrors Optical System',
+              sourceUrl: 'https://webb.nasa.gov/content/observatory/ote/mirrors/index.html',
+              sourceSnippet: 'The 6.5-meter primary mirror is composed of 18 hexagonal segment pieces made from beryllium and vapor-deposited with 100 nm of pure gold.',
+              relevance: 'Verifies segment count, beryllium substrate material, gold coating, and diameter.',
+            },
+          ],
+        },
+        {
+          claimId: 'C004',
+          originalText: 'JWST is designed primarily for infrared astronomy, enabling observations of the universe\'s first galaxies.',
+          normalisedClaim: 'JWST specializes in infrared wavelengths to observe early epoch cosmic structures.',
+          claimType: 'scientific',
+          verifiable: true,
+          verificationStatus: 'SUPPORTED',
+          confidence: 0.96,
+          explanation: 'Corroborated by NIRCam and MIRI instrument science mission profiles.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C004-1',
+              claimId: 'C004',
+              sourceTitle: 'Space Telescope Science Institute: Scientific Objectives',
+              sourceUrl: 'https://www.stsci.edu/jwst/about-jwst/science-goals',
+              sourceSnippet: 'Webb observes primarily in the near-infrared and mid-infrared spectrum to penetrate cosmic dust and capture high-redshift light from early cosmological formations.',
+              relevance: 'Corroborates instrument spectral range and cosmological targets.',
+            },
+          ],
+        },
+      ],
+      evidence: [],
+      contradictions: [],
+      hallucinations: [],
+      citations: [],
+      securityFindings: [],
+    },
+  },
+
+  // CASE 2: Answer containing one incorrect factual statement
+  {
+    id: 'demo-case-2',
+    name: 'Case 2: Erroneous Fact in Quantum Computing History',
+    tagline: 'Factually Inaccurate Discovery Attribution',
+    category: 'Scientific / Historical',
+    inputType: 'text',
+    sourceAI: 'Gemini',
+    textInput: `Quantum teleportation was first experimentally demonstrated using photons in 1997 by Anton Zeilinger's team in Vienna. The term "quantum supremacy" was coined by Richard Feynman in 1982 during his keynote address at MIT. Shor's algorithm for polynomial-time integer factorization was formulated in 1994 by Peter Shor.`,
+    fullRecord: {
+      verificationId: 'DEMO-QUANTUM-002',
+      userId: 'demo_user',
+      title: 'Quantum Information Science Milestones',
+      inputType: 'text',
+      sourceAI: 'Gemini',
+      submittedText: `Quantum teleportation was first experimentally demonstrated using photons in 1997 by Anton Zeilinger's team in Vienna. The term "quantum supremacy" was coined by Richard Feynman in 1982 during his keynote address at MIT. Shor's algorithm for polynomial-time integer factorization was formulated in 1994 by Peter Shor.`,
+      createdAt: '2026-11-08T15:10:00Z',
+      processingStatus: 'completed',
+      isDemo: true,
+      assessment: {
+        overallLabel: 'Needs review',
+        summaryExplanation: 'External evidence refutes the attribution of "quantum supremacy" to Richard Feynman. The term was actually coined by John Preskill in 2012.',
+        factualityScore: 0.67,
+        factualityDisplay: '67% (2/3 verified claims)',
+        evidenceCoverageScore: 1.0,
+        evidenceCoverageDisplay: '100% (3/3 verifiable claims)',
+        contradictionScore: 0,
+        contradictionDisplay: '0 detected',
+        citationReliabilityScore: null,
+        citationReliabilityDisplay: 'Not applicable',
+        codeSecurityScore: null,
+        codeSecurityDisplay: 'Not applicable',
+        totalVerifiableClaims: 3,
+        supportedClaimsCount: 2,
+        refutedClaimsCount: 1,
+        insufficientClaimsCount: 0,
+        contradictionsCount: 0,
+        hallucinationsCount: 1,
+        verifiedCitationsCount: 0,
+        mismatchedCitationsCount: 0,
+        notFoundCitationsCount: 0,
+        criticalSecurityCount: 0,
+        highSecurityCount: 0,
+        mediumSecurityCount: 0,
+        lowSecurityCount: 0,
+      },
+      claims: [
+        {
+          claimId: 'C001',
+          originalText: 'Quantum teleportation was first experimentally demonstrated using photons in 1997 by Anton Zeilinger\'s team in Vienna.',
+          normalisedClaim: 'Quantum teleportation was experimentally demonstrated with photons in 1997 by Anton Zeilinger in Vienna.',
+          claimType: 'historical',
+          verifiable: true,
+          verificationStatus: 'SUPPORTED',
+          confidence: 0.98,
+          explanation: 'Confirmed by Nature publication Bouwmeester et al. (1997) "Experimental quantum teleportation".',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C001-1',
+              claimId: 'C001',
+              sourceTitle: 'Nature (1997): Experimental quantum teleportation',
+              sourceUrl: 'https://www.nature.com/articles/37155',
+              sourceSnippet: 'Bouwmeester, D., Pan, JW., Mattle, K., Eibl, M., Weinfurter, H., Zeilinger, A. Experimental quantum teleportation. Nature 390, 575–579 (1997).',
+              relevance: 'Verifies team, date (1997), and photonic demonstration.',
+            },
+          ],
+        },
+        {
+          claimId: 'C002',
+          originalText: 'The term "quantum supremacy" was coined by Richard Feynman in 1982 during his keynote address at MIT.',
+          normalisedClaim: 'Richard Feynman coined the term "quantum supremacy" in 1982.',
+          claimType: 'historical',
+          verifiable: true,
+          verificationStatus: 'REFUTED',
+          confidence: 0.96,
+          explanation: 'REFUTED: Richard Feynman proposed quantum simulators in 1982 ("Simulating Physics with Computers"), but the term "quantum supremacy" was introduced 30 years later by Caltech physicist John Preskill in 2012.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C002-1',
+              claimId: 'C002',
+              sourceTitle: 'John Preskill (2012): Quantum Computing and the Entanglement Frontier',
+              sourceUrl: 'https://arxiv.org/abs/1203.5813',
+              sourceSnippet: 'Preskill, John. "Quantum computing and the entanglement frontier." Rapporteur talk at 25th Solvay Conference (2012). "I propose the term quantum supremacy..."',
+              relevance: 'Directly disproves attribution to Feynman and confirms Preskill as origin.',
+            },
+          ],
+        },
+        {
+          claimId: 'C003',
+          originalText: 'Shor\'s algorithm for polynomial-time integer factorization was formulated in 1994 by Peter Shor.',
+          normalisedClaim: 'Peter Shor published his quantum polynomial-time factoring algorithm in 1994.',
+          claimType: 'scientific',
+          verifiable: true,
+          verificationStatus: 'SUPPORTED',
+          confidence: 0.99,
+          explanation: 'Corroborated by IEEE FOCS 1994 symposium proceedings.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C003-1',
+              claimId: 'C003',
+              sourceTitle: 'IEEE 35th Annual Symposium on Foundations of Computer Science',
+              sourceUrl: 'https://ieeexplore.ieee.org/document/365700',
+              sourceSnippet: 'Shor, P.W., "Algorithms for quantum computation: discrete logarithms and factoring," 1994, pp. 124-134.',
+              relevance: 'Verifies author, discovery, and 1994 publication year.',
+            },
+          ],
+        },
+      ],
+      evidence: [],
+      contradictions: [],
+      hallucinations: [
+        {
+          warningId: 'HAL-001',
+          claimId: 'C002',
+          statement: 'The term "quantum supremacy" was coined by Richard Feynman in 1982',
+          category: 'potential_fabrication',
+          explanation: 'AI conflated Feynman\'s 1982 paper on quantum computation with Preskill\'s 2012 coining of "quantum supremacy".',
+          severity: 'high',
+        },
+      ],
+      citations: [],
+      securityFindings: [],
+    },
+  },
+
+  // CASE 3: Contradictory dates in historical narrative
+  {
+    id: 'demo-case-3',
+    name: 'Case 3: Internally Contradictory Corporate Timeline',
+    tagline: 'Direct Temporal Conflict Between Stated Milestones',
+    category: 'Historical / Business',
+    inputType: 'text',
+    sourceAI: 'Claude',
+    textInput: `DeepMind Technologies was founded in London in September 2010 by Demis Hassabis, Shane Legg, and Mustafa Suleyman. The research lab rose to global prominence after being acquired by Google in 2014. Later in the overview, it is noted that Demis Hassabis and his co-founders established DeepMind in 2016 following their breakthrough with AlphaGo.`,
+    fullRecord: {
+      verificationId: 'DEMO-TIMELINE-003',
+      userId: 'demo_user',
+      title: 'DeepMind Corporate Genesis & Acquisition Timeline',
+      inputType: 'text',
+      sourceAI: 'Claude',
+      submittedText: `DeepMind Technologies was founded in London in September 2010 by Demis Hassabis, Shane Legg, and Mustafa Suleyman. The research lab rose to global prominence after being acquired by Google in 2014. Later in the overview, it is noted that Demis Hassabis and his co-founders established DeepMind in 2016 following their breakthrough with AlphaGo.`,
+      createdAt: '2026-11-08T16:00:00Z',
+      processingStatus: 'completed',
+      isDemo: true,
+      assessment: {
+        overallLabel: 'Needs review',
+        summaryExplanation: 'Direct internal contradiction detected: The text simultaneously claims DeepMind was founded in 2010 and founded in 2016. External evidence verifies 2010 as the true founding year.',
+        factualityScore: 0.67,
+        factualityDisplay: '67% (2/3 verified claims)',
+        evidenceCoverageScore: 1.0,
+        evidenceCoverageDisplay: '100% (3/3 verifiable claims)',
+        contradictionScore: 0.7,
+        contradictionDisplay: '1 contradictory assertion pair',
+        citationReliabilityScore: null,
+        citationReliabilityDisplay: 'Not applicable',
+        codeSecurityScore: null,
+        codeSecurityDisplay: 'Not applicable',
+        totalVerifiableClaims: 3,
+        supportedClaimsCount: 2,
+        refutedClaimsCount: 1,
+        insufficientClaimsCount: 0,
+        contradictionsCount: 1,
+        hallucinationsCount: 1,
+        verifiedCitationsCount: 0,
+        mismatchedCitationsCount: 0,
+        notFoundCitationsCount: 0,
+        criticalSecurityCount: 0,
+        highSecurityCount: 0,
+        mediumSecurityCount: 0,
+        lowSecurityCount: 0,
+      },
+      claims: [
+        {
+          claimId: 'C001',
+          originalText: 'DeepMind Technologies was founded in London in September 2010 by Demis Hassabis, Shane Legg, and Mustafa Suleyman.',
+          normalisedClaim: 'DeepMind Technologies was founded in London in September 2010 by Hassabis, Legg, and Suleyman.',
+          claimType: 'historical',
+          verifiable: true,
+          verificationStatus: 'SUPPORTED',
+          confidence: 0.99,
+          explanation: 'UK Companies House registration confirms incorporation in September 2010.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C001-1',
+              claimId: 'C001',
+              sourceTitle: 'UK Companies House: Google DeepMind Official Filing',
+              sourceUrl: 'https://find-and-update.company-information.service.gov.uk/company/07386357',
+              sourceSnippet: 'Company number 07386357. Incorporated on 23 September 2010 under the name DeepMind Technologies Limited.',
+              relevance: 'Legal corporate record proving true incorporation date.',
+            },
+          ],
+        },
+        {
+          claimId: 'C002',
+          originalText: 'The research lab rose to global prominence after being acquired by Google in 2014.',
+          normalisedClaim: 'Google acquired DeepMind in 2014.',
+          claimType: 'historical',
+          verifiable: true,
+          verificationStatus: 'SUPPORTED',
+          confidence: 0.98,
+          explanation: 'Corroborated by official Google acquisition disclosure in January 2014.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C002-1',
+              claimId: 'C002',
+              sourceTitle: 'BBC News: Google buys UK artificial intelligence startup DeepMind',
+              sourceUrl: 'https://www.bbc.com/news/technology-25905298',
+              sourceSnippet: 'Google has acquired British artificial intelligence firm DeepMind in January 2014 for an estimated £400m.',
+              relevance: 'Validates 2014 acquisition.',
+            },
+          ],
+        },
+        {
+          claimId: 'C003',
+          originalText: 'Demis Hassabis and his co-founders established DeepMind in 2016 following their breakthrough with AlphaGo.',
+          normalisedClaim: 'DeepMind was established in 2016 after the AlphaGo match.',
+          claimType: 'historical',
+          verifiable: true,
+          verificationStatus: 'REFUTED',
+          confidence: 0.97,
+          explanation: 'REFUTED: DeepMind was already a 6-year-old operating company when AlphaGo played Lee Sedol in March 2016.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C003-1',
+              claimId: 'C003',
+              sourceTitle: 'Nature: Mastering the game of Go with deep neural networks',
+              sourceUrl: 'https://www.nature.com/articles/nature16961',
+              sourceSnippet: 'Silver et al. (2016). AlphaGo was developed by Google DeepMind (incorporated in 2010).',
+              relevance: 'Disproves 2016 founding date.',
+            },
+          ],
+        },
+      ],
+      evidence: [],
+      contradictions: [
+        {
+          contradictionId: 'CONTR-001',
+          claimIds: ['C001', 'C003'],
+          claimTexts: [
+            'DeepMind Technologies was founded in London in September 2010',
+            'Demis Hassabis and his co-founders established DeepMind in 2016',
+          ],
+          explanation: 'Claim C001 states DeepMind was founded in 2010, while Claim C003 claims it was established in 2016. An entity cannot be established on two separate dates six years apart.',
+          severity: 'high',
+        },
+      ],
+      hallucinations: [
+        {
+          warningId: 'HAL-002',
+          claimId: 'C003',
+          statement: 'Demis Hassabis and his co-founders established DeepMind in 2016',
+          category: 'temporal_conflict',
+          explanation: 'The AI generated an impossible timeline that directly inverted cause and effect.',
+          severity: 'high',
+        },
+      ],
+      citations: [],
+      securityFindings: [],
+    },
+  },
+
+  // CASE 4: Academic reference with mismatched metadata
+  {
+    id: 'demo-case-4',
+    name: 'Case 4: Academic Citation with Fabricated DOI & Year',
+    tagline: 'Crossref / OpenAlex Metadata Hallucination',
+    category: 'Academic Research',
+    inputType: 'text',
+    sourceAI: 'ChatGPT',
+    textInput: `Recent developments in self-supervised representation learning demonstrate significant efficiency gains:
+Vaswani, A., et al. "Attention Is All You Need." IEEE Transactions on Neural Networks, vol. 28, no. 4, 2021, pp. 1102-1115. DOI: 10.1109/TNNLS.2021.3098765.`,
+    fullRecord: {
+      verificationId: 'DEMO-CITATION-004',
+      userId: 'demo_user',
+      title: 'Attention Mechanism Citation Verification',
+      inputType: 'text',
+      sourceAI: 'ChatGPT',
+      submittedText: `Recent developments in self-supervised representation learning demonstrate significant efficiency gains:
+Vaswani, A., et al. "Attention Is All You Need." IEEE Transactions on Neural Networks, vol. 28, no. 4, 2021, pp. 1102-1115. DOI: 10.1109/TNNLS.2021.3098765.`,
+      createdAt: '2026-11-08T16:45:00Z',
+      processingStatus: 'completed',
+      isDemo: true,
+      assessment: {
+        overallLabel: 'Needs review',
+        summaryExplanation: 'Citation audit detected severe metadata hallucination: The landmark paper "Attention Is All You Need" was published in NeurIPS 2017, not IEEE Transactions in 2021. The submitted DOI is fabricated or mismatched.',
+        factualityScore: 0.5,
+        factualityDisplay: '50% (1/2 verified claims)',
+        evidenceCoverageScore: 1.0,
+        evidenceCoverageDisplay: '100% (2/2 verifiable claims)',
+        contradictionScore: 0,
+        contradictionDisplay: '0 detected',
+        citationReliabilityScore: 0.0,
+        citationReliabilityDisplay: '0% (0/1 citations verified)',
+        codeSecurityScore: null,
+        codeSecurityDisplay: 'Not applicable',
+        totalVerifiableClaims: 2,
+        supportedClaimsCount: 1,
+        refutedClaimsCount: 1,
+        insufficientClaimsCount: 0,
+        contradictionsCount: 0,
+        hallucinationsCount: 1,
+        verifiedCitationsCount: 0,
+        mismatchedCitationsCount: 1,
+        notFoundCitationsCount: 0,
+        criticalSecurityCount: 0,
+        highSecurityCount: 0,
+        mediumSecurityCount: 0,
+        lowSecurityCount: 0,
+      },
+      claims: [
+        {
+          claimId: 'C001',
+          originalText: 'Vaswani, A., et al. authored "Attention Is All You Need."',
+          normalisedClaim: 'Vaswani et al. authored the paper "Attention Is All You Need".',
+          claimType: 'research',
+          verifiable: true,
+          verificationStatus: 'SUPPORTED',
+          confidence: 0.99,
+          explanation: 'Confirmed by NeurIPS and Google Research publications.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C001-1',
+              claimId: 'C001',
+              sourceTitle: 'NeurIPS 2017: Attention Is All You Need',
+              sourceUrl: 'https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html',
+              sourceSnippet: 'Vaswani, Ashish; Shazeer, Noam; Parmar, Niki; Uszkoreit, Jakob; Jones, Llion; Gomez, Aidan N.; Kaiser, Lukasz; Polosukhin, Illia.',
+              relevance: 'Verifies authorship.',
+            },
+          ],
+        },
+        {
+          claimId: 'C002',
+          originalText: '"Attention Is All You Need" was published in IEEE Transactions on Neural Networks in 2021 with DOI 10.1109/TNNLS.2021.3098765.',
+          normalisedClaim: '"Attention Is All You Need" was published in IEEE TNNLS in 2021 with DOI 10.1109/TNNLS.2021.3098765.',
+          claimType: 'research',
+          verifiable: true,
+          verificationStatus: 'REFUTED',
+          confidence: 0.98,
+          explanation: 'REFUTED: The paper was published in NeurIPS 2017. The IEEE DOI corresponds to an unrelated paper on neural networks.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C002-1',
+              claimId: 'C002',
+              sourceTitle: 'Crossref DOI Resolver',
+              sourceUrl: 'https://doi.org/10.1109/TNNLS.2021.3098765',
+              sourceSnippet: 'Indexed Crossref metadata associates this DOI with an unrelated biomedical robotics paper published in 2021.',
+              relevance: 'Demonstrates mismatched DOI identifier.',
+            },
+          ],
+        },
+      ],
+      evidence: [],
+      contradictions: [],
+      hallucinations: [
+        {
+          warningId: 'HAL-003',
+          claimId: 'C002',
+          statement: 'Published in IEEE Transactions on Neural Networks, 2021',
+          category: 'potential_fabrication',
+          explanation: 'The AI hallucinated a fake venue, publication year, and DOI for an otherwise genuine famous research paper.',
+          severity: 'high',
+        },
+      ],
+      citations: [
+        {
+          citationId: 'CIT-001',
+          submittedCitation: 'Vaswani, A., et al. "Attention Is All You Need." IEEE Transactions on Neural Networks, vol. 28, no. 4, 2021, pp. 1102-1115. DOI: 10.1109/TNNLS.2021.3098765.',
+          status: 'METADATA_MISMATCH',
+          retrievedTitle: 'Attention Is All You Need',
+          retrievedAuthors: 'Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit',
+          retrievedYear: '2017',
+          retrievedDoi: '10.48550/arXiv.1706.03762',
+          retrievedUrl: 'https://arxiv.org/abs/1706.03762',
+          mismatchDetails: 'Year mismatch: Submitted "2021", official "2017". Venue mismatch: NeurIPS, not IEEE TNNLS. Submitted DOI points to a different paper in Crossref.',
+          databaseSource: 'Crossref',
+        },
+      ],
+      securityFindings: [],
+    },
+  },
+
+  // CASE 5: Python code containing detectable security problems
+  {
+    id: 'demo-case-5',
+    name: 'Case 5: AI-Generated Python Backend with Critical Flaws',
+    tagline: 'Hardcoded Secret, SQL Injection & Unsafe OS Command',
+    category: 'Cybersecurity / Code',
+    inputType: 'code',
+    sourceAI: 'ChatGPT',
+    language: 'python',
+    codeInput: `# AI-Generated User Management Service
+import sqlite3
+import os
+
+DATABASE_URL = "sqlite:///production.db"
+AWS_SECRET_KEY = "AKIAIOSFODNN7EXAMPLE/wJalrXUtnFEMI/K7MDENG/bPxRfiCY"
+
+def get_user_profile(user_id):
+    conn = sqlite3.connect("production.db")
+    cursor = conn.cursor()
+    # Query building for fast lookup
+    query = "SELECT * FROM users WHERE id = '" + user_id + "'"
+    cursor.execute(query)
+    return cursor.fetchone()
+
+def backup_user_data(backup_folder, user_id):
+    # Execute system archiving utility
+    cmd = f"tar -czf {backup_folder}/{user_id}.tar.gz /data/users/{user_id}"
+    os.system(cmd)
+    return True
+`,
+    fullRecord: {
+      verificationId: 'DEMO-SEC-005',
+      userId: 'demo_user',
+      title: 'Python Backend Auth & Backup Handler',
+      inputType: 'code',
+      sourceAI: 'ChatGPT',
+      submittedCode: `# AI-Generated User Management Service
+import sqlite3
+import os
+
+DATABASE_URL = "sqlite:///production.db"
+AWS_SECRET_KEY = "AKIAIOSFODNN7EXAMPLE/wJalrXUtnFEMI/K7MDENG/bPxRfiCY"
+
+def get_user_profile(user_id):
+    conn = sqlite3.connect("production.db")
+    cursor = conn.cursor()
+    # Query building for fast lookup
+    query = "SELECT * FROM users WHERE id = '" + user_id + "'"
+    cursor.execute(query)
+    return cursor.fetchone()
+
+def backup_user_data(backup_folder, user_id):
+    # Execute system archiving utility
+    cmd = f"tar -czf {backup_folder}/{user_id}.tar.gz /data/users/{user_id}"
+    os.system(cmd)
+    return True
+`,
+      language: 'python',
+      createdAt: '2026-11-08T17:15:00Z',
+      processingStatus: 'completed',
+      isDemo: true,
+      assessment: {
+        overallLabel: 'High-risk findings detected',
+        summaryExplanation: 'Static security scanner discovered 3 high-severity security vulnerabilities including hardcoded cryptographic credentials, string concatenation SQL injection, and unsanitized OS command execution.',
+        factualityScore: null,
+        factualityDisplay: 'Not applicable (Code analysis only)',
+        evidenceCoverageScore: null,
+        evidenceCoverageDisplay: 'Not applicable',
+        contradictionScore: 0,
+        contradictionDisplay: 'Not applicable',
+        citationReliabilityScore: null,
+        citationReliabilityDisplay: 'Not applicable',
+        codeSecurityScore: 0.2,
+        codeSecurityDisplay: '3 findings (2 Critical, 1 High)',
+        totalVerifiableClaims: 0,
+        supportedClaimsCount: 0,
+        refutedClaimsCount: 0,
+        insufficientClaimsCount: 0,
+        contradictionsCount: 0,
+        hallucinationsCount: 0,
+        verifiedCitationsCount: 0,
+        mismatchedCitationsCount: 0,
+        notFoundCitationsCount: 0,
+        criticalSecurityCount: 2,
+        highSecurityCount: 1,
+        mediumSecurityCount: 0,
+        lowSecurityCount: 0,
+      },
+      claims: [],
+      evidence: [],
+      contradictions: [],
+      hallucinations: [],
+      citations: [],
+      securityFindings: [
+        {
+          findingId: 'SEC-001',
+          ruleId: 'SEC-CRED-001',
+          name: 'Hardcoded API Key or Secret Token',
+          severity: 'Critical',
+          lineNumber: 6,
+          snippet: 'AWS_SECRET_KEY = "AKIAIOSFODNN7EXAMPLE/wJalrXUtnFEMI/K7MDENG/bPxRfiCY"',
+          explanation: 'Plaintext AWS secret access key committed as a hardcoded string literal. Anyone reading this repository gains access to cloud infrastructure.',
+          remediation: 'Load secrets from environment variables via `os.environ.get("AWS_SECRET_KEY")` or utilize IAM Roles.',
+        },
+        {
+          findingId: 'SEC-002',
+          ruleId: 'SEC-SQLI-001',
+          name: 'Potential SQL Injection via String Concatenation',
+          severity: 'Critical',
+          lineNumber: 12,
+          snippet: 'query = "SELECT * FROM users WHERE id = \'" + user_id + "\'"',
+          explanation: 'SQL statement constructed dynamically using untrusted string concatenation. An attacker passing `\' OR \'1\'=\'1` can dump the entire users table.',
+          remediation: 'Use parameterized queries: `cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))`.',
+        },
+        {
+          findingId: 'SEC-003',
+          ruleId: 'SEC-CMD-001',
+          name: 'Dangerous OS Command Injection Vector',
+          severity: 'High',
+          lineNumber: 19,
+          snippet: 'os.system(cmd)',
+          explanation: '`os.system()` runs an unescaped shell string with user parameters. Passing a semicolon like `folder; rm -rf /` executes arbitrary shell commands.',
+          remediation: 'Use `subprocess.run(["tar", "-czf", dest, source], check=True, shell=False)` without shell interpolation.',
+        },
+      ],
+    },
+  },
+
+  // CASE 6: Answer containing claims with insufficient evidence
+  {
+    id: 'demo-case-6',
+    name: 'Case 6: Speculative Exoplanet Biosignature Claim',
+    tagline: 'Unverified Atmospheric Water Vapor Anomaly',
+    category: 'Scientific / Astronomy',
+    inputType: 'text',
+    sourceAI: 'Gemini',
+    textInput: `In 2025, astronomers using the Habitable Worlds Observatory conclusively confirmed the presence of artificial chlorofluorocarbons (CFCs) in the atmosphere of exoplanet Proxima Centauri b, definitively proving the existence of an extraterrestrial industrial civilization. Proxima Centauri is approximately 4.2465 light-years from the Sun.`,
+    fullRecord: {
+      verificationId: 'DEMO-EXOPLANET-006',
+      userId: 'demo_user',
+      title: 'Proxima Centauri b Biosignature Analysis',
+      inputType: 'text',
+      sourceAI: 'Gemini',
+      submittedText: `In 2025, astronomers using the Habitable Worlds Observatory conclusively confirmed the presence of artificial chlorofluorocarbons (CFCs) in the atmosphere of exoplanet Proxima Centauri b, definitively proving the existence of an extraterrestrial industrial civilization. Proxima Centauri is approximately 4.2465 light-years from the Sun.`,
+      createdAt: '2026-11-08T18:00:00Z',
+      processingStatus: 'completed',
+      isDemo: true,
+      assessment: {
+        overallLabel: 'Needs review',
+        summaryExplanation: 'External search grounding confirms the distance to Proxima Centauri, but strongly refutes the claim of confirmed artificial CFCs or industrial civilization. Furthermore, the Habitable Worlds Observatory is still in planning and not operational.',
+        factualityScore: 0.5,
+        factualityDisplay: '50% (1/2 verified claims)',
+        evidenceCoverageScore: 1.0,
+        evidenceCoverageDisplay: '100% (2/2 verifiable claims)',
+        contradictionScore: 0,
+        contradictionDisplay: '0 detected',
+        citationReliabilityScore: null,
+        citationReliabilityDisplay: 'Not applicable',
+        codeSecurityScore: null,
+        codeSecurityDisplay: 'Not applicable',
+        totalVerifiableClaims: 2,
+        supportedClaimsCount: 1,
+        refutedClaimsCount: 1,
+        insufficientClaimsCount: 0,
+        contradictionsCount: 0,
+        hallucinationsCount: 1,
+        verifiedCitationsCount: 0,
+        mismatchedCitationsCount: 0,
+        notFoundCitationsCount: 0,
+        criticalSecurityCount: 0,
+        highSecurityCount: 0,
+        mediumSecurityCount: 0,
+        lowSecurityCount: 0,
+      },
+      claims: [
+        {
+          claimId: 'C001',
+          originalText: 'Astronomers using the Habitable Worlds Observatory confirmed artificial chlorofluorocarbons (CFCs) on Proxima Centauri b in 2025.',
+          normalisedClaim: 'Habitable Worlds Observatory confirmed artificial CFC atmospheric signatures on Proxima Centauri b in 2025.',
+          claimType: 'scientific',
+          verifiable: true,
+          verificationStatus: 'REFUTED',
+          confidence: 0.99,
+          explanation: 'REFUTED: The Habitable Worlds Observatory (HWO) is a concept mission slated for launch in the late 2030s/2040s. No artificial CFC atmospheric signatures have ever been confirmed on any exoplanet.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C001-1',
+              claimId: 'C001',
+              sourceTitle: 'NASA: Habitable Worlds Observatory Mission Concept',
+              sourceUrl: 'https://science.nasa.gov/astrophysics/programs/habitable-worlds-observatory/',
+              sourceSnippet: 'The Habitable Worlds Observatory (HWO) is a future large infrared/optical/ultraviolet space telescope recommended by the Decadal Survey, currently in pre-formulation.',
+              relevance: 'Proves the observatory is not operational and could not have made 2025 observations.',
+            },
+          ],
+        },
+        {
+          claimId: 'C002',
+          originalText: 'Proxima Centauri is approximately 4.2465 light-years from the Sun.',
+          normalisedClaim: 'Proxima Centauri is approximately 4.2465 light-years away from the Sun.',
+          claimType: 'scientific',
+          verifiable: true,
+          verificationStatus: 'SUPPORTED',
+          confidence: 0.98,
+          explanation: 'Confirmed by ESA Gaia astrometric catalog parallax measurements.',
+          evidenceSources: [
+            {
+              evidenceId: 'EVD-C002-1',
+              claimId: 'C002',
+              sourceTitle: 'ESA Gaia Early Data Release 3: Parallax of Proxima Centauri',
+              sourceUrl: 'https://www.cosmos.esa.int/web/gaia/edr3',
+              sourceSnippet: 'Gaia parallax of 768.5 ± 0.2 mas yields a distance of 1.301 parsecs (4.2465 light years).',
+              relevance: 'Corroborates stellar distance.',
+            },
+          ],
+        },
+      ],
+      evidence: [],
+      contradictions: [],
+      hallucinations: [
+        {
+          warningId: 'HAL-004',
+          claimId: 'C001',
+          statement: 'Confirmed artificial chlorofluorocarbons (CFCs) on Proxima Centauri b',
+          category: 'potential_fabrication',
+          explanation: 'Pure hallucination of non-existent astronomical findings attributed to a future telescope that has not yet been built.',
+          severity: 'high',
+        },
+      ],
+      citations: [],
+      securityFindings: [],
+    },
+  },
+];
